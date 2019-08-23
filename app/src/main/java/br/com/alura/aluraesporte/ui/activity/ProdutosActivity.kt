@@ -17,14 +17,18 @@ class ProdutosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.produtos_activity)
         if (savedInstanceState == null) {
             val produtosFragment: ListaProdutosFragment by inject()
             transacaoFragment {
                 replace(R.id.container, produtosFragment)
             }
+            FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "vitrine", "VitrineActivity")
+            val bundle = Bundle()
+            bundle.putString("screen_name", "vitrine")
+            FirebaseAnalytics.getInstance(this).logEvent("screenView", bundle)
         }
-        FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "lista_de_produtos", "ProdutosActivity")
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
@@ -40,8 +44,39 @@ class ProdutosActivity : AppCompatActivity() {
                         addToBackStack(null)
                         replace(R.id.container, detalhesProdutoFragment)
                     }
+                    FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "detalhes_produto", "ProdutosActivity")
+
+                    val bundle = Bundle()
+                    bundle.putString("screen_name", "detalhes dos produtos")
+                    FirebaseAnalytics.getInstance(this).logEvent("screenView", bundle)
+
+                    val bundle2 = Bundle()
+                    bundle2.putString(FirebaseAnalytics.Param.ITEM_ID, produtoSelecionado.id.toString())
+                    bundle2.putString(FirebaseAnalytics.Param.ITEM_NAME, produtoSelecionado.nome)
+                    FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle2)
+
+
+                    val product1 = Bundle()
+                    product1.putString(FirebaseAnalytics.Param.ITEM_ID, "sku1234") // ITEM_ID or ITEM_NAME is required
+                    product1.putString(FirebaseAnalytics.Param.ITEM_NAME, "Donut Friday Scented T-Shirt")
+                    product1.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "Apparel/Men/Shirts")
+                    product1.putString(FirebaseAnalytics.Param.ITEM_VARIANT, "Blue")
+                    product1.putString(FirebaseAnalytics.Param.ITEM_BRAND, "Google")
+                    product1.putDouble(FirebaseAnalytics.Param.PRICE, 29.99)
+                    product1.putString(FirebaseAnalytics.Param.CURRENCY, "USD") // Item-level currency unused today
+                    product1.putLong(FirebaseAnalytics.Param.INDEX, 1) // Position of the item in the list
+
+
+                    val ecommerceBundle = Bundle()
+                    ecommerceBundle.putBundle("items", product1)
+
+                    ecommerceBundle.putString(
+                        FirebaseAnalytics.Param.ITEM_LIST,
+                        "Vitrine"
+                    ) // Optional list name
+
+                    FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, ecommerceBundle)
                 }
-                FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "detalhes_produto", "ProdutosActivity")
             }
             is DetalhesProdutoFragment -> {
                 fragment.quandoProdutoComprado = { produtoComprado ->
@@ -53,14 +88,24 @@ class ProdutosActivity : AppCompatActivity() {
                         addToBackStack(null)
                         replace(R.id.container, pagamentoFragment)
                     }
+
+                    FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "pagamento", "PagamentoActivity")
+
+                    val bundle = Bundle()
+                    bundle.putString("screen_name", "pagamento")
+                    FirebaseAnalytics.getInstance(this).logEvent("screenView", bundle)
+
+                    val bundle2 = Bundle()
+                    bundle.putString("screen_name", "pagamento")
+                    FirebaseAnalytics.getInstance(this).logEvent("screenView", bundle2)
+
                 }
-                FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "pagamento", "ProdutosActivity")
+
             }
             is PagamentoFragment -> {
                 fragment.quandoPagamentoRealizado = {
                     Toast.makeText(this, COMPRA_REALIZADA, Toast.LENGTH_LONG).show()
                 }
-                FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "compra_sucesso", "ProdutosActivity")
             }
         }
     }
