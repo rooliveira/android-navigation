@@ -8,6 +8,7 @@ import br.com.alura.aluraesporte.R
 import br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment
 import br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment
 import br.com.alura.aluraesporte.ui.fragment.PagamentoFragment
+import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.android.ext.android.inject
 
 private const val COMPRA_REALIZADA = "Compra realizada"
@@ -23,6 +24,7 @@ class ProdutosActivity : AppCompatActivity() {
                 replace(R.id.container, produtosFragment)
             }
         }
+        FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "lista_de_produtos", "ProdutosActivity")
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
@@ -39,6 +41,7 @@ class ProdutosActivity : AppCompatActivity() {
                         replace(R.id.container, detalhesProdutoFragment)
                     }
                 }
+                FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "detalhes_produto", "ProdutosActivity")
             }
             is DetalhesProdutoFragment -> {
                 fragment.quandoProdutoComprado = { produtoComprado ->
@@ -51,11 +54,13 @@ class ProdutosActivity : AppCompatActivity() {
                         replace(R.id.container, pagamentoFragment)
                     }
                 }
+                FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "pagamento", "ProdutosActivity")
             }
             is PagamentoFragment -> {
                 fragment.quandoPagamentoRealizado = {
                     Toast.makeText(this, COMPRA_REALIZADA, Toast.LENGTH_LONG).show()
                 }
+                FirebaseAnalytics.getInstance(this).setCurrentScreen(this, "compra_sucesso", "ProdutosActivity")
             }
         }
     }
