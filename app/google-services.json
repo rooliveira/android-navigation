@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "964024650019",
+    "firebase_url": "https://performance-labs.firebaseio.com",
+    "project_id": "performance-labs",
+    "storage_bucket": "performance-labs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964024650019:android:07f7def5e8eb10bb",
+        "android_client_info": {
+          "package_name": "br.com.alura.aluraesporte"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964024650019-1h7eq194njv1sv43fv6nk8rtm78vci7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGblsnvSe1zxgmhWYFPtX-5N2byAGCB08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964024650019-1h7eq194njv1sv43fv6nk8rtm78vci7q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "964024650019-ftbca2th7p6me6bt787n04s03lp6t17u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.dp6.exemplo.firebase.bluekai-sdk"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
